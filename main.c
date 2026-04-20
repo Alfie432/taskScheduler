@@ -13,10 +13,19 @@ typedef struct Node {
 
 // prototypes
 int generateID(void);
+void clearBuffer(void);
 
 
 int main(void)
 {
+    int choice;
+
+    while (1)
+    {
+        printf("\nEnter choice:");
+        scanf("%d", &choice);
+        clearBuffer();
+    }
 
     return 0; 
 }
@@ -31,4 +40,15 @@ int generateID(void)
     int number = (rand() % (max - min + 1)) + min; 
 
     return number;
+}
+
+
+void clearBuffer(void)
+{
+    int ch = getchar();
+
+    while ((ch != EOF) && (ch != '\n'))
+    {
+        ch = getchar();
+    }
 }
