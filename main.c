@@ -86,6 +86,7 @@ void addTicket(Ticket *head)
     if (head == NULL)
     {
         head = malloc(sizeof(Ticket));
+        head->next = NULL;
     }
 
     Ticket *temp = head;
@@ -105,7 +106,7 @@ void addTicket(Ticket *head)
     printf("\nEnter Ticket: ");
     fgets(enteredTask, MAX, stdin);
 
-    printf("\nEnter priority (1: Basic, 2: Medium, 3: Important, 4: Crucial) ");
+    printf("Enter priority (1: Basic, 2: Medium, 3: Important, 4: Crucial):  ");
     scanf("%d", &enteredPriority);
     clearBuffer();
 
@@ -132,12 +133,15 @@ void viewTickets(Ticket *head)
 {
     Ticket *temp = head;
 
-    while (temp->next != NULL)
+    while (temp != NULL)
     {
         printf("\nTicket: %s\n", temp->task);
         printf("\nTicket ID: %d\n", temp->id);
         printf("\nTicket Priority: %d\n", temp->priority);
         printf("\n\n"); // for spacing
+
+        // go to the next node
+        temp = temp->next;
     }
 
     free(temp);
