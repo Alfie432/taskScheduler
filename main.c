@@ -133,12 +133,20 @@ void viewTickets(Ticket *head)
 {
     Ticket *temp = head;
 
-    while (temp != NULL)
+    while (temp->next != NULL)
     {
+        
         printf("\nTicket: %s\n", temp->task);
         printf("\nTicket ID: %d\n", temp->id);
         printf("\nTicket Priority: %d\n", temp->priority);
         printf("\n\n"); // for spacing
+        
+        printf("TEST\n"); // ? REMOVE THIS ONCE FINISHED USING IT
+        
+        if (temp->next == NULL)
+        {
+            break;
+        }
 
         // go to the next node
         temp = temp->next;
