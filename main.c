@@ -18,6 +18,7 @@ int generateID(Ticket *head);
 void clearBuffer(void);
 void addTicket(Ticket *head);
 void viewTickets(Ticket *head);
+void deleteList(Ticket *head);
 
 
 int main(void)
@@ -49,9 +50,9 @@ int main(void)
         case 3:
             break;
         case 4:
-            free(head);
+            deleteList(head);
+            head = NULL;
             return 0; 
-            break;
         default:
             continue;
         }
@@ -130,7 +131,6 @@ void addTicket(Ticket *head)
     scanf("%d", &enteredPriority);
     clearBuffer();
 
-
     // * by using next->, the data is being shifted by a node to keep the head node empty 
     // check if user entered a valid priority ranking, default is 1
     if ((1 <= enteredPriority) && (enteredPriority <= 4))
@@ -164,6 +164,17 @@ void viewTickets(Ticket *head)
         temp = temp->next;
     }
 
-
     return;
+}
+
+void deleteList(Ticket *head)
+{
+    Ticket *temp; 
+
+    while (head != NULL)
+    {
+        temp = head->next;
+        free(head);
+        head = temp;
+    }
 }
