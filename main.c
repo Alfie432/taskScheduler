@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #define MAX 48
 
@@ -13,7 +14,7 @@ typedef struct Node {
 
 
 // prototypes
-int generateID(void);
+int generateID(Ticket *head);
 void clearBuffer(void);
 void addTicket(Ticket *head);
 void viewTickets(Ticket *head);
@@ -22,7 +23,14 @@ void viewTickets(Ticket *head);
 int main(void)
 {
     int choice;
-    Ticket *head = NULL;
+    srand(time(NULL));
+
+    Ticket *head = (Ticket *)malloc(sizeof(Ticket)); // type casting makes sure the memory is for a Ticket structure
+    // keep the head node empty, its purpose is to only point to the linkedList, not be apart of it
+    head->next = NULL;
+    head->id = -1;
+    head->priority = -1;
+    *head->task = '\0';
 
     while (1)
     {
@@ -41,7 +49,6 @@ int main(void)
         case 3:
             break;
         case 4:
-            // ! make sure to free everything (deleteList())
             free(head);
             return 0; 
             break;
@@ -57,13 +64,32 @@ int main(void)
 }
 
 
-int generateID(void)
+int generateID(Ticket *head)
 {
     int min = 100;
     int max = 999;
+    int number;
+    int isDuplicate; 
 
-    srand(time(NULL));
-    int number = (rand() % (max - min + 1)) + min; 
+    do 
+    {
+        isDuplicate = 0; // assume the ID is unique
+        int number = (rand() % (max - min + 1)) + min; 
+
+        // check if ID is unique
+        Ticket *temp = head;
+
+        while (temp != NULL) 
+        {
+            if (temp->id == number)
+            {
+                isDuplicate = 1;
+                break;
+            }
+
+            temp = temp->next;
+        }
+    } while (isDuplicate); // while isDuplicate == 1
 
     return number;
 }
@@ -82,13 +108,6 @@ void clearBuffer(void)
 
 void addTicket(Ticket *head)
 {
-    // create the first ticket when the linked list is empty
-    if (head == NULL)
-    {
-        head = malloc(sizeof(Ticket));
-        head->next = NULL;
-    }
-
     Ticket *temp = head;
 
     // go to the last node, then create an additional node
@@ -97,7 +116,8 @@ void addTicket(Ticket *head)
         temp = temp->next;
     }
 
-    temp->next = malloc(sizeof(Ticket));
+    temp->next = (Ticket *)malloc(sizeof(Ticket));
+    temp->next->next = NULL; // this sets the ending point of the linkedlist
 
     // get info for the ticket
     char enteredTask[MAX];
@@ -110,21 +130,21 @@ void addTicket(Ticket *head)
     scanf("%d", &enteredPriority);
     clearBuffer();
 
+
+    // * by using next->, the data is being shifted by a node to keep the head node empty 
     // check if user entered a valid priority ranking, default is 1
     if ((1 <= enteredPriority) && (enteredPriority <= 4))
     {
-        temp->priority = enteredPriority;
+        temp->next->priority = enteredPriority;
     }
     else
     {
-        temp->priority = 1;
+        temp->next->priority = 1;
     }
 
-    *temp->task = *enteredTask;
-    temp->id = generateID();
+    strcpy(temp->next->task, enteredTask); // this is how you copy strings over into a node
+    temp->next->id = generateID(head);
 
-
-    free(temp);
     return;
 }
 
@@ -134,24 +154,16 @@ void viewTickets(Ticket *head)
     Ticket *temp = head;
 
     while (temp->next != NULL)
-    {
-        
-        printf("\nTicket: %s\n", temp->task);
-        printf("\nTicket ID: %d\n", temp->id);
-        printf("\nTicket Priority: %d\n", temp->priority);
-        printf("\n\n"); // for spacing
-        
-        printf("TEST\n"); // ? REMOVE THIS ONCE FINISHED USING IT
-        
-        if (temp->next == NULL)
-        {
-            break;
-        }
+    {   
+        printf("\nTicket: %s", temp->next->task);
+        printf("ID: %d\n", temp->next->id);
+        printf("Priority: %d\n", temp->next->priority);
+        printf("\n"); // for spacing
 
         // go to the next node
         temp = temp->next;
     }
 
-    free(temp);
+
     return;
 }
