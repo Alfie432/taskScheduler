@@ -1,0 +1,17 @@
+# === OS Specific Junk ===
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# === Development/Editor Settings ===
+.vscode/
+*.swp
+*~
+
+# === Compiled Binaries and Build Artifacts ===
+main
+*.o
+*.out
+
+# === Debugging Symbols ===
+*.dSYM/
