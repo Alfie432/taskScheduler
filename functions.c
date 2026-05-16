@@ -89,6 +89,12 @@ void viewTickets(Ticket *head)
 {
     Ticket *temp = head;
 
+    if (head->next == NULL) 
+    {
+        printf("\nNo tickets assigned.\n");
+        return;
+    }
+
     while (temp->next != NULL)
     {   
         printf("\nTicket: %s", temp->next->task);
@@ -119,15 +125,45 @@ void deleteList(Ticket *head)
 
 void removeTicket(Ticket *head, int ID)
 {
+    // if ticket list in empty
+    if (head->next == NULL)
+    {
+        printf("\nNo tickets assigned.\n");
+        return;
+    }
+
+    int complete = 0;
     Ticket *temp = head;
 
-    while (temp != NULL);
+    while (temp->next->next != NULL)
     {
-        if (temp->id == ID)
+        if (temp->next->id == ID)
         {
             // when the ticket is found
+            Ticket *before = temp;
+            temp = temp->next; // go to the next node
+
+            // if next node in NULL, then temp is the last node
+            // else, move temp by 1 more node
+            if (temp->next == NULL)
+            {
+                before->next = NULL;
+                free(temp);
+            }
+            else
+            {
+                temp = temp->next; // go to the next node
+                before->next = temp;
+            }
+            
+            printf("\nTicked %d has been removed successfully.\n", ID);
+            return; // break out of function to avoid wasting performance
         }
+
+        temp = temp->next;
     }
+
+    printf("\nTicket not found.\n");
 }
 
 

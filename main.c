@@ -8,6 +8,7 @@ int main(void)
 {
     srand(time(NULL));
     int choice;
+    int id;
 
     Ticket *head = (Ticket *)malloc(sizeof(Ticket)); // type casting makes sure the memory is for a Ticket structure
     // keep the head node empty, its purpose is to only point to the linkedList, not be apart of it
@@ -31,7 +32,7 @@ int main(void)
             viewTickets(head);
             break;
         case 3:
-            int id = getID();
+            id = getID();
             removeTicket(head, id);
             break;
         case 4:
