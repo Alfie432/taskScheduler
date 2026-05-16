@@ -22,5 +22,6 @@ void viewTickets(Ticket *head);
 void deleteList(Ticket *head);
 void removeTicket(Ticket *head, int ID);
 int getID(void);
+void orderList(Ticket *head);
 
 #endif 

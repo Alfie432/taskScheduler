@@ -177,3 +177,9 @@ int getID(void)
 
     return id;
 }
+
+
+void orderList(Ticket *head)
+{
+    
+}
