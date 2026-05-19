@@ -179,7 +179,3 @@ int getID(void)
 }
 
 
-void orderList(Ticket *head)
-{
-    
-}
