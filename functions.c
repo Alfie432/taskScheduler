@@ -42,7 +42,7 @@ void clearBuffer(void)
     }
 }
 
-// ! Update this file to order the tasks when they are added.
+
 void addTicket(Ticket *head)
 {
     Ticket *temp = head;
