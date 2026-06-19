@@ -42,6 +42,7 @@ void clearBuffer(void)
     }
 }
 
+// test comment
 
 void addTicket(Ticket *head)
 {
